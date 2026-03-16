@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="m-0">
+<% if session[:user_id].present? %>
+<% current_view = (@view.presence || "dashboard") %>
+<div class="flex min-h-screen bg-gray-50 font-sans">
+  <aside class="w-64 bg-slate-900 text-white hidden md:flex flex-col shadow-xl">
+    <div class="p-6">
+      <h1 class="text-2xl font-bold text-indigo-400">MarketFlow</h1>
+      <p class="text-xs text-slate-400 uppercase tracking-widest mt-1">Gestão de Estoque</p>
+    </div>
+    
+    <nav class="flex-1 px-4 space-y-2">
+      <a href="<%= home_path(view: 'dashboard') %>" class="flex items-center gap-3 p-3 rounded-lg transition <%= current_view == 'dashboard' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-900/20' : 'text-slate-300 hover:bg-slate-800' %>">
+        <svg width="24" height="24" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+        Dashboard
+      </a>
+      <a href="<%= home_path(view: 'produtos') %>" class="flex items-center gap-3 p-3 rounded-lg transition <%= current_view == 'produtos' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-900/20' : 'text-slate-300 hover:bg-slate-800' %>">
+        <svg width="24" height="24" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+        Produtos
+      </a>
+      <a href="<%= home_path(view: 'estoque_baixo') %>" class="flex items-center gap-3 p-3 rounded-lg transition <%= current_view == 'estoque_baixo' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-900/20' : 'text-slate-300 hover:bg-slate-800' %>">
+        <svg width="24" height="24" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+        Estoque Baixo
+      </a>
+    </nav>
+
+    <div class="p-4 border-t border-slate-800">
+      <%= button_to logout_path, method: :delete, class: "flex items-center gap-3 text-red-400 hover:text-red-300 transition w-full p-2 text-left bg-transparent border-0" do %>
+        <svg width="24" height="24" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+        Sair do Sistema
+      <% end %>
+    </div>
+  </aside>
+
+  <main class="flex-1 flex flex-col overflow-hidden bg-gray-50">
+    <header class="bg-white border-b border-gray-200 p-4 flex justify-between items-center shadow-sm">
+      <h2 class="text-xl font-semibold text-gray-800">
+        <%= current_view == "produtos" ? "Produtos" : (current_view == "estoque_baixo" ? "Estoque Baixo" : "Dashboard de Visão Geral") %>
+      </h2>
+      <div class="flex items-center gap-4 text-sm text-gray-600">
+        <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium">Login realizado</span>
+        <span class="font-medium">Olá, <%= @username || "Usuário" %>!</span>
+      </div>
+    </header>
+
+    <div class="flex-1 overflow-y-auto p-8">
+      <% if notice.present? %>
+        <div class="mb-4 rounded-md bg-emerald-100 px-4 py-2 text-emerald-800"><%= notice %></div>
+      <% end %>
+      <% if alert.present? %>
+        <div class="mb-4 rounded-md bg-red-100 px-4 py-2 text-red-800"><%= alert %></div>
+      <% end %>
+      <%= yield %>
+    </div>
+  </main>
+</div>
+<% else %>
+<div class="min-h-screen bg-gray-50 p-6">
+  <% if notice.present? %>
+    <div class="mx-auto mb-4 max-w-md rounded-md bg-emerald-100 px-4 py-2 text-emerald-800"><%= notice %></div>
+  <% end %>
+  <% if alert.present? %>
+    <div class="mx-auto mb-4 max-w-md rounded-md bg-red-100 px-4 py-2 text-red-800"><%= alert %></div>
+  <% end %>
+  <%= yield %>
+</div>
+<% end %>
+</body>
+</html>

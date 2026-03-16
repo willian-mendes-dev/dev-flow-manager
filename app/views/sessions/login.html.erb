@@ -1,0 +1,25 @@
+<section class="mx-auto max-w-md rounded-xl bg-white p-6 shadow">
+  <h1 class="mb-2 text-2xl font-bold">MarketFlow - Gestão de Estoque</h1>
+  <p class="mb-6 text-sm text-slate-600">
+    Faça login para acessar o dashboard.
+  </p>
+
+  <%= form_with url: login_path, method: :post, local: true, class: "space-y-4" do |f| %>
+    <div>
+      <%= f.label :name, "Nome", class: "mb-1 block text-sm font-medium" %>
+      <%= f.text_field :name, value: @name, class: "w-full rounded-md border border-slate-300 px-3 py-2", placeholder: "Seu nome" %>
+    </div>
+
+    <div>
+      <%= f.label :password, "Senha", class: "mb-1 block text-sm font-medium" %>
+      <%= f.password_field :password, class: "w-full rounded-md border border-slate-300 px-3 py-2", placeholder: "Exemplo@123" %>
+    </div>
+
+    <%= f.submit "Entrar", class: "w-full rounded-md bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700" %>
+  <% end %>
+
+  <p class="mt-4 text-sm text-slate-600">
+    Não tem conta?
+    <%= link_to "Cadastre-se aqui", signup_path, class: "font-medium text-blue-600 hover:text-blue-700" %>
+  </p>
+</section>

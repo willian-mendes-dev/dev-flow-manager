@@ -1,0 +1,119 @@
+<section>
+  <% if @view == "dashboard" %>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center justify-center bg-indigo-50 p-3 rounded-xl text-indigo-600">
+            <svg width="48" height="48" class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+          </div>
+          <span class="text-green-500 text-xs font-bold uppercase">+5% este mês</span>
+        </div>
+        <h3 class="text-slate-500 text-sm font-medium">Produtos Cadastrados</h3>
+        <p class="text-3xl font-bold text-slate-800 mt-1">248</p>
+      </div>
+
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center justify-center bg-red-50 p-3 rounded-xl text-red-600">
+            <svg width="48" height="48" class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+          </div>
+          <span class="text-red-500 text-xs font-bold uppercase">Urgente</span>
+        </div>
+        <h3 class="text-slate-500 text-sm font-medium">Estoque Baixo</h3>
+        <p class="text-3xl font-bold text-slate-800 mt-1">17</p>
+      </div>
+
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center justify-center bg-green-50 p-3 rounded-xl text-green-600">
+            <svg width="48" height="48" class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+          </div>
+          <span class="text-slate-400 text-xs font-bold uppercase">Hoje</span>
+        </div>
+        <h3 class="text-slate-500 text-sm font-medium">Movimentações</h3>
+        <p class="text-3xl font-bold text-slate-800 mt-1">39</p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <div class="p-6 border-b border-gray-50 flex justify-between items-center">
+        <h3 class="text-lg font-bold text-slate-800">Movimentações Recentes</h3>
+        <button class="text-indigo-600 text-sm font-semibold hover:underline">Ver tudo</button>
+      </div>
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-gray-50 text-slate-500 text-xs uppercase tracking-wider">
+            <th class="p-4 font-semibold">Data</th>
+            <th class="p-4 font-semibold">Produto</th>
+            <th class="p-4 font-semibold text-center">Tipo</th>
+            <th class="p-4 font-semibold text-right">Quantidade</th>
+          </tr>
+        </thead>
+        <tbody class="text-slate-600 text-sm divide-y divide-gray-100">
+          <% @movements.each do |movement| %>
+            <tr class="hover:bg-gray-50 transition">
+              <td class="p-4 italic"><%= movement[:date] %></td>
+              <td class="p-4 font-medium text-slate-800"><%= movement[:product] %></td>
+              <td class="p-4 text-center"><span class="<%= movement[:type] == 'Entrada' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' %> px-3 py-1 rounded-full text-xs font-bold"><%= movement[:type] %></span></td>
+              <td class="p-4 text-right font-mono font-bold"><%= movement[:quantity] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% elsif @view == "produtos" %>
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <div class="p-6 border-b border-gray-50 flex justify-between items-center">
+        <h3 class="text-lg font-bold text-slate-800">Todos os Produtos</h3>
+        <span class="text-slate-500 text-sm font-semibold"><%= @products.size %> itens</span>
+      </div>
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-gray-50 text-slate-500 text-xs uppercase tracking-wider">
+            <th class="p-4 font-semibold">SKU</th>
+            <th class="p-4 font-semibold">Produto</th>
+            <th class="p-4 font-semibold">Categoria</th>
+            <th class="p-4 font-semibold text-right">Estoque</th>
+          </tr>
+        </thead>
+        <tbody class="text-slate-600 text-sm divide-y divide-gray-100">
+          <% @products.each do |product| %>
+            <tr class="hover:bg-gray-50 transition">
+              <td class="p-4 font-mono"><%= product[:sku] %></td>
+              <td class="p-4 font-medium text-slate-800"><%= product[:name] %></td>
+              <td class="p-4"><%= product[:category] %></td>
+              <td class="p-4 text-right font-bold"><%= product[:stock] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% elsif @view == "estoque_baixo" %>
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <div class="p-6 border-b border-gray-50 flex justify-between items-center">
+        <h3 class="text-lg font-bold text-slate-800">Estoque Baixo</h3>
+        <span class="text-red-500 text-sm font-semibold">Atenção necessária</span>
+      </div>
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-gray-50 text-slate-500 text-xs uppercase tracking-wider">
+            <th class="p-4 font-semibold">SKU</th>
+            <th class="p-4 font-semibold">Produto</th>
+            <th class="p-4 font-semibold text-right">Estoque Atual</th>
+            <th class="p-4 font-semibold text-right">Mínimo</th>
+          </tr>
+        </thead>
+        <tbody class="text-slate-600 text-sm divide-y divide-gray-100">
+          <% @low_stock_items.each do |item| %>
+            <tr class="hover:bg-gray-50 transition">
+              <td class="p-4 font-mono"><%= item[:sku] %></td>
+              <td class="p-4 font-medium text-slate-800"><%= item[:name] %></td>
+              <td class="p-4 text-right font-bold text-red-600"><%= item[:stock] %></td>
+              <td class="p-4 text-right"><%= item[:minimum] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+</section>

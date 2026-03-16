@@ -1,0 +1,17 @@
+/.bundle
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+/tmp/pids/*
+!/tmp/pids/.keep
+/tmp/cache/*
+!/tmp/cache/.keep
+/tmp/sockets/*
+!/tmp/sockets/.keep
+/storage/*
+!/storage/.keep
+/vendor/bundle
+/db/*.sqlite3
+/db/*.sqlite3-journal
+.env

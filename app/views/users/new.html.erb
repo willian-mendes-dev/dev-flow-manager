@@ -1,0 +1,33 @@
+<section class="mx-auto max-w-md rounded-xl bg-white p-6 shadow">
+  <h1 class="mb-2 text-2xl font-bold">Criar conta - MarketFlow</h1>
+  <p class="mb-6 text-sm text-slate-600">
+    Cadastre-se para acessar o sistema.
+  </p>
+
+  <%= form_with model: @user, url: signup_path, method: :post, local: true, class: "space-y-4" do |f| %>
+    <div>
+      <%= f.label :name, "Nome", class: "mb-1 block text-sm font-medium" %>
+      <%= f.text_field :name, class: "w-full rounded-md border border-slate-300 px-3 py-2", placeholder: "Seu nome" %>
+    </div>
+
+    <div>
+      <%= f.label :password, "Senha", class: "mb-1 block text-sm font-medium" %>
+      <%= f.password_field :password, class: "w-full rounded-md border border-slate-300 px-3 py-2", placeholder: "Exemplo@123" %>
+      <p class="mt-1 text-xs text-slate-500">
+        A senha deve ter no mínimo 8 caracteres, com 1 letra maiúscula, 1 número e 1 caractere especial.
+      </p>
+    </div>
+
+    <div>
+      <%= f.label :password_confirmation, "Confirmar senha", class: "mb-1 block text-sm font-medium" %>
+      <%= f.password_field :password_confirmation, class: "w-full rounded-md border border-slate-300 px-3 py-2", placeholder: "Repita a senha" %>
+    </div>
+
+    <%= f.submit "Cadastrar", class: "w-full rounded-md bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700" %>
+  <% end %>
+
+  <p class="mt-4 text-sm text-slate-600">
+    Já tem conta?
+    <%= link_to "Faça login", login_path, class: "font-medium text-blue-600 hover:text-blue-700" %>
+  </p>
+</section>

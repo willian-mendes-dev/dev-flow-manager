@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -e
+
+rm -f /app/tmp/pids/server.pid
+
+if [ -n "${POSTGRES_HOST}" ]; then
+  echo "Aguardando PostgreSQL em ${POSTGRES_HOST}:${POSTGRES_PORT:-5432}..."
+  until pg_isready -h "${POSTGRES_HOST}" -p "${POSTGRES_PORT:-5432}" -U "${POSTGRES_USER:-postgres}" >/dev/null 2>&1; do
+    sleep 1
+  done
+fi
+
+bundle exec rails db:prepare
+bundle exec rails tailwindcss:build
+
+if [ "${1:-}" = "rails" ]; then
+  shift
+  set -- bundle exec rails "$@"
+fi
+
+exec "$@"
