@@ -19,7 +19,7 @@
       </div>
       <div>
         <dt class="text-xs uppercase tracking-wider text-slate-500">Preco</dt>
-        <dd class="mt-1 text-sm font-medium text-slate-800"><%= number_to_currency(@product.price) %></dd>
+        <dd class="mt-1 text-sm font-medium text-slate-800"><%= number_to_currency(@product.price, unit: "R$ ", separator: ",", delimiter: ".") %></dd>
       </div>
       <div>
         <dt class="text-xs uppercase tracking-wider text-slate-500">Quantidade em estoque</dt>

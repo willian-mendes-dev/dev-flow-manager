@@ -21,7 +21,7 @@
           <th class="p-4 font-semibold text-right">Preco</th>
           <th class="p-4 font-semibold text-right">Estoque</th>
           <th class="p-4 font-semibold text-center">Status</th>
-          <th class="p-4 font-semibold text-right">Acoes</th>
+          <th class="p-4 font-semibold text-right">Ações</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-100 text-sm text-slate-700">
@@ -46,7 +46,7 @@
             <td class="p-4 font-medium text-slate-800"><%= product.name %></td>
             <td class="p-4 font-mono"><%= product.sku %></td>
             <td class="p-4"><%= product.category %></td>
-            <td class="p-4 text-right"><%= number_to_currency(product.price) %></td>
+            <td class="p-4 text-right"><%= number_to_currency(product.price, unit: "R$ ", separator: ",", delimiter: ".") %></td>
             <td class="p-4 text-right font-semibold"><%= product.stock_quantity %></td>
             <td class="p-4 text-center">
               <span class="rounded-full px-3 py-1 text-xs font-bold <%= status_classes %>"><%= status_text %></span>
