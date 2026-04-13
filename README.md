@@ -18,6 +18,12 @@ Sistema para controle de entrada/saida de mercadorias, gestao de fornecedores e 
 - Dashboard com navegacao por `?view=dashboard|produtos|estoque_baixo`
 - Logout limpando sessao e redirecionando para login
 
+## Entrega AC2
+
+- O que mudou: "Migracao de dados estaticos para persistencia real com PostgreSQL."
+- Novas funcionalidades: "CRUD completo de produtos, sistema de SKU unico e logica de alertas de estoque."
+- Instrucao tecnica: ao baixar o projeto, rode `docker-compose run web rails db:migrate`.
+
 ## Estrutura principal
 
 - `app/controllers/sessions_controller.rb`: login, home e logout
