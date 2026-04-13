@@ -1,0 +1,10 @@
+<section class="space-y-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-bold text-slate-800">Editar produto</h1>
+    <%= link_to "Voltar", products_path, class: "text-sm font-semibold text-slate-700 hover:underline" %>
+  </div>
+
+  <div class="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+    <%= render "form", product: @product %>
+  </div>
+</section>

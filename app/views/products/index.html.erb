@@ -1,0 +1,71 @@
+<section class="space-y-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-bold text-slate-800">Produtos</h1>
+    <%= link_to "Novo produto", new_product_path, class: "rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700" %>
+  </div>
+
+  <div class="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+    <%= form_with url: products_path, method: :get, local: true, class: "flex items-center gap-3" do |f| %>
+      <%= f.text_field :q, value: @query, placeholder: "Buscar por nome, SKU ou categoria", class: "w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none" %>
+      <%= f.submit "Buscar", class: "rounded-lg bg-slate-800 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-900" %>
+    <% end %>
+  </div>
+
+  <div class="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="bg-gray-50 text-xs uppercase tracking-wider text-slate-500">
+          <th class="p-4 font-semibold">Nome</th>
+          <th class="p-4 font-semibold">SKU</th>
+          <th class="p-4 font-semibold">Categoria</th>
+          <th class="p-4 font-semibold text-right">Preco</th>
+          <th class="p-4 font-semibold text-right">Estoque</th>
+          <th class="p-4 font-semibold text-center">Status</th>
+          <th class="p-4 font-semibold text-right">Acoes</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100 text-sm text-slate-700">
+        <% @products.each do |product| %>
+          <% status_classes =
+             if product.stock_quantity.zero?
+               "bg-red-100 text-red-700"
+             elsif product.stock_quantity <= 20
+               "bg-amber-100 text-amber-700"
+             else
+               "bg-emerald-100 text-emerald-700"
+             end %>
+          <% status_text =
+             if product.stock_quantity.zero?
+               "Sem estoque"
+             elsif product.stock_quantity <= 20
+               "Estoque baixo"
+             else
+               "Estoque ok"
+             end %>
+          <tr class="hover:bg-gray-50 transition">
+            <td class="p-4 font-medium text-slate-800"><%= product.name %></td>
+            <td class="p-4 font-mono"><%= product.sku %></td>
+            <td class="p-4"><%= product.category %></td>
+            <td class="p-4 text-right"><%= number_to_currency(product.price) %></td>
+            <td class="p-4 text-right font-semibold"><%= product.stock_quantity %></td>
+            <td class="p-4 text-center">
+              <span class="rounded-full px-3 py-1 text-xs font-bold <%= status_classes %>"><%= status_text %></span>
+            </td>
+            <td class="p-4">
+              <div class="flex items-center justify-end gap-3">
+                <%= link_to "Ver", product_path(product), class: "text-sm font-semibold text-indigo-600 hover:underline" %>
+                <%= link_to "Editar", edit_product_path(product), class: "text-sm font-semibold text-slate-700 hover:underline" %>
+                <%= button_to "Excluir", product_path(product), method: :delete, form_class: "inline", class: "text-sm font-semibold text-red-600 hover:underline bg-transparent border-0 p-0", data: { turbo_confirm: "Tem certeza?" } %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+        <% if @products.empty? %>
+          <tr>
+            <td colspan="7" class="p-6 text-center text-slate-500">Nenhum produto cadastrado. Clique em Novo Produto para começar</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</section>

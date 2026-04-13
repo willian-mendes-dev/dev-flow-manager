@@ -6,8 +6,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="m-0">
-<% if session[:user_id].present? %>
-<% current_view = (@view.presence || "dashboard") %>
+<% if current_user.present? %>
+<% current_view = (@view.presence || (controller_name == "products" ? "produtos" : "dashboard")) %>
 <div class="flex min-h-screen bg-gray-50 font-sans">
   <aside class="w-64 bg-slate-900 text-white hidden md:flex flex-col shadow-xl">
     <div class="p-6">
@@ -20,7 +20,7 @@
         <svg width="24" height="24" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
         Dashboard
       </a>
-      <a href="<%= home_path(view: 'produtos') %>" class="flex items-center gap-3 p-3 rounded-lg transition <%= current_view == 'produtos' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-900/20' : 'text-slate-300 hover:bg-slate-800' %>">
+      <a href="<%= products_path %>" class="flex items-center gap-3 p-3 rounded-lg transition <%= current_view == 'produtos' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-900/20' : 'text-slate-300 hover:bg-slate-800' %>">
         <svg width="24" height="24" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
         Produtos
       </a>
@@ -45,13 +45,22 @@
       </h2>
       <div class="flex items-center gap-4 text-sm text-gray-600">
         <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium">Login realizado</span>
-        <span class="font-medium">Olá, <%= @username || "Usuário" %>!</span>
+        <span class="font-medium">Olá, <%= current_user.name %>!</span>
       </div>
     </header>
 
     <div class="flex-1 overflow-y-auto p-8">
       <% if notice.present? %>
-        <div class="mb-4 rounded-md bg-emerald-100 px-4 py-2 text-emerald-800"><%= notice %></div>
+        <div id="success-flash" class="mb-4 rounded-md bg-green-100 px-4 py-2 text-green-800 transition-opacity duration-500"><%= notice %></div>
+        <script>
+          setTimeout(function() {
+            var flash = document.getElementById("success-flash");
+            if (flash) {
+              flash.classList.add("opacity-0");
+              setTimeout(function() { flash.remove(); }, 500);
+            }
+          }, 3000);
+        </script>
       <% end %>
       <% if alert.present? %>
         <div class="mb-4 rounded-md bg-red-100 px-4 py-2 text-red-800"><%= alert %></div>
@@ -63,7 +72,16 @@
 <% else %>
 <div class="min-h-screen bg-gray-50 p-6">
   <% if notice.present? %>
-    <div class="mx-auto mb-4 max-w-md rounded-md bg-emerald-100 px-4 py-2 text-emerald-800"><%= notice %></div>
+    <div id="success-flash-logged-out" class="mx-auto mb-4 max-w-md rounded-md bg-green-100 px-4 py-2 text-green-800 transition-opacity duration-500"><%= notice %></div>
+    <script>
+      setTimeout(function() {
+        var flash = document.getElementById("success-flash-logged-out");
+        if (flash) {
+          flash.classList.add("opacity-0");
+          setTimeout(function() { flash.remove(); }, 500);
+        }
+      }, 3000);
+    </script>
   <% end %>
   <% if alert.present? %>
     <div class="mx-auto mb-4 max-w-md rounded-md bg-red-100 px-4 py-2 text-red-800"><%= alert %></div>
