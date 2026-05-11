@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartkick@5.0.1/dist/chartkick.min.js"></script>
 </head>
 <body class="m-0">
 <% if current_user.present? %>
@@ -14,7 +16,7 @@
       <h1 class="text-2xl font-bold text-indigo-400">MarketFlow</h1>
       <p class="text-xs text-slate-400 uppercase tracking-widest mt-1">Gestão de Estoque</p>
     </div>
-    
+
     <nav class="flex-1 px-4 space-y-2">
       <a href="<%= home_path(view: 'dashboard') %>" class="flex items-center gap-3 p-3 rounded-lg transition <%= current_view == 'dashboard' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-900/20' : 'text-slate-300 hover:bg-slate-800' %>">
         <svg width="24" height="24" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
@@ -45,47 +47,21 @@
       </h2>
       <div class="flex items-center gap-4 text-sm text-gray-600">
         <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium">Login realizado</span>
-        <span class="font-medium">Olá, <%= current_user.name %>!</span>
+        <span class="font-medium">Olá, <%= current_user&.name.presence || "Usuário" %>!</span>
       </div>
     </header>
 
     <div class="flex-1 overflow-y-auto p-8">
-      <% if notice.present? %>
-        <div id="success-flash" class="mb-4 rounded-md bg-green-100 px-4 py-2 text-green-800 transition-opacity duration-500"><%= notice %></div>
-        <script>
-          setTimeout(function() {
-            var flash = document.getElementById("success-flash");
-            if (flash) {
-              flash.classList.add("opacity-0");
-              setTimeout(function() { flash.remove(); }, 500);
-            }
-          }, 3000);
-        </script>
-      <% end %>
-      <% if alert.present? %>
-        <div class="mb-4 rounded-md bg-red-100 px-4 py-2 text-red-800"><%= alert %></div>
-      <% end %>
+      <%= render "shared/flash" %>
       <%= yield %>
     </div>
   </main>
 </div>
 <% else %>
 <div class="min-h-screen bg-gray-50 p-6">
-  <% if notice.present? %>
-    <div id="success-flash-logged-out" class="mx-auto mb-4 max-w-md rounded-md bg-green-100 px-4 py-2 text-green-800 transition-opacity duration-500"><%= notice %></div>
-    <script>
-      setTimeout(function() {
-        var flash = document.getElementById("success-flash-logged-out");
-        if (flash) {
-          flash.classList.add("opacity-0");
-          setTimeout(function() { flash.remove(); }, 500);
-        }
-      }, 3000);
-    </script>
-  <% end %>
-  <% if alert.present? %>
-    <div class="mx-auto mb-4 max-w-md rounded-md bg-red-100 px-4 py-2 text-red-800"><%= alert %></div>
-  <% end %>
+  <div class="mx-auto max-w-md">
+    <%= render "shared/flash" %>
+  </div>
   <%= yield %>
 </div>
 <% end %>

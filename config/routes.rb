@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   get "/signup", to: "users#new"
   post "/signup", to: "users#create"
-  get "/home", to: "sessions#home"
+  get "/home", to: "home#index"
   resources :products
   match "/logout", to: "sessions#destroy", via: [:delete, :get]
 end

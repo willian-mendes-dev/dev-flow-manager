@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  has_many :activity_logs, dependent: :nullify
 
   before_validation :normalize_name
 

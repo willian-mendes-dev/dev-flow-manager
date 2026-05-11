@@ -7,6 +7,7 @@ gem "pg", "~> 1.5"
 gem "puma", ">= 5.0"
 gem "sprockets-rails"
 gem "tailwindcss-rails"
+gem "chartkick"
 gem "bcrypt", "~> 3.1.7"
 gem "bootsnap", require: false
 
