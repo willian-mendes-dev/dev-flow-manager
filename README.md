@@ -1,72 +1,70 @@
-# MarketFlow - Projeto de Software (Ruby on Rails 7)
+# MarketFlow
+### Gestao Inteligente de Inventario
 
-Sistema para controle de entrada/saida de mercadorias, gestao de fornecedores e alertas de estoque baixo.
+![Ruby on Rails](https://img.shields.io/badge/Ruby_on_Rails-7.1-CC0000?logo=rubyonrails&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-336791?logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
 
-## Stack
+## 📌 Descricao
+
+O **MarketFlow** e uma solucao robusta para gestao de estoque em mercados, desenvolvida com foco em **performance operacional** e **inteligencia de dados**.  
+O sistema centraliza o controle de produtos, facilita a analise financeira do inventario e entrega uma experiencia moderna para acompanhamento das operacoes.
+
+## 🚀 Funcionalidades Principais
+
+- 🔐 **Autenticacao segura com Bcrypt** para cadastro e login de usuarios.
+- 📦 **CRUD completo de produtos** com validacoes de integridade (campos obrigatorios, SKU unico e regras de estoque/preco).
+- 📊 **Dashboard Inteligente** com calculos de valor total do estoque.
+- 📈 **Visualizacao de dados com graficos** (distribuicao por categoria e ranking de produtos por valor em estoque).
+- 📄 **Exportacao de relatorios em CSV** para apoio a analises e tomadas de decisao.
+
+## 🛠️ Tecnologias Utilizadas
 
 - Ruby on Rails 7
 - PostgreSQL
+- Docker / Docker Compose
 - Tailwind CSS
-- Docker e Docker Compose
+- Chartkick
 
-## Funcionalidades implementadas
+## ▶️ Como Rodar o Projeto
 
-- Autenticacao real com cadastro e login
-- Cadastro de usuario com `name` e senha criptografada com `bcrypt`
-- Login com validacao de credenciais (`authenticate`)
-- Sessao persistida com `session[:user_id]`
-- Dashboard com navegacao por `?view=dashboard|produtos|estoque_baixo`
-- Logout limpando sessao e redirecionando para login
-
-## Entrega AC2
-
-- O que mudou: "Migracao de dados estaticos para persistencia real com PostgreSQL."
-- Novas funcionalidades: "CRUD completo de produtos, sistema de SKU unico e logica de alertas de estoque."
-- Instrucao tecnica: ao baixar o projeto, rode `docker-compose run web rails db:migrate`.
-
-## Estrutura principal
-
-- `app/controllers/sessions_controller.rb`: login, home e logout
-- `app/controllers/users_controller.rb`: cadastro de usuarios
-- `app/models/user.rb`: `has_secure_password` e validacoes
-- `app/views/sessions/login.html.erb`: tela de login
-- `app/views/users/new.html.erb`: tela de cadastro
-- `app/views/sessions/home.html.erb`: dashboard e tabelas
-- `app/views/layouts/application.html.erb`: layout SaaS com sidebar
-- `db/migrate/20260315194500_create_users.rb`: cria tabela users
-- `db/migrate/20260316003000_add_password_digest_to_users.rb`: adiciona `password_digest`
-- `docker-compose.yml`: servicos `web` e `db`
-- `bin/docker-entrypoint`: prepara banco e sobe app
-
-## Como rodar com Docker
-
-1. Build e subida dos containers:
+### 1) Clonar o repositorio
 
 ```bash
-docker compose up --build
+git clone https://github.com/willian-mendes-dev/dev-flow-manager.git
+cd dev-flow-manager
 ```
 
-2. Instalar gems (apos alterar Gemfile):
+### 2) Subir os servicos com build
 
 ```bash
-docker compose run --entrypoint "" web bundle install
+docker-compose up --build
 ```
 
-3. Criar banco e rodar migrations:
+### 3) Preparar o banco de dados (create + migrate)
 
 ```bash
-docker compose run web rails db:create db:migrate
+docker-compose run web rails db:prepare
 ```
 
-4. Acessar:
+### 4) Popular com dados de exemplo
 
-`http://localhost:3000`
+```bash
+docker-compose run web rails db:seed
+```
 
-## Rotas principais
+### 5) Acessar a aplicacao
 
-- `GET /login`: tela de login
-- `POST /login`: autentica usuario existente
-- `GET /signup`: tela de cadastro
-- `POST /signup`: cria usuario e loga automaticamente
-- `GET /home`: dashboard protegido (requer sessao)
-- `DELETE /logout` (ou `GET /logout`): encerra sessao
+```text
+http://localhost:3000
+```
+
+## 📋 Gestao do Projeto
+
+A organizacao das tarefas segue metodologia **Kanban** utilizando **GitHub Projects**.
+
+- Board: [MarketFlow - Kanban](https://github.com/users/willian-mendes-dev/projects)
+
+## ✅ Status do Projeto
+
+**AC3 Finalizado - Estavel**
