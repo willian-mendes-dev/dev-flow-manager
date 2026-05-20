@@ -1,24 +1,31 @@
 FROM ruby:3.2.2
 
+# Instala dependências de sistema (necessárias para Rails e Assets)
 RUN apt-get update -qq && \
-    apt-get install -y --no-install-recommends build-essential libpq-dev postgresql-client && \
+    apt-get install -y --no-install-recommends build-essential libpq-dev postgresql-client nodejs npm && \
     rm -rf /var/lib/apt/lists/*
+RUN npm install -g yarn
 
-ENV RAILS_ENV=development \
-    BUNDLE_PATH=/usr/local/bundle
+# Define ambiente de PRODUÇÃO
+ENV RAILS_ENV=production
+ENV NODE_ENV=production
 
 WORKDIR /app
 
-COPY Gemfile ./
-RUN bundle install
+# Instala as gems de forma otimizada para Docker
+COPY Gemfile Gemfile.lock ./
+RUN bundle config set --local deployment 'true' && \
+    bundle install
 
 COPY . .
 
-RUN chmod +x bin/rails bin/rake bin/docker-entrypoint
+# Pré-compila os Assets (Tailwind e JS) usando uma chave temporária
+RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+
+# Garante permissão nos executáveis
+RUN chmod +x bin/rails bin/rake
 
 EXPOSE 3000
 
-# ENTRYPOINT ["./bin/docker-entrypoint"]
-
-# Comando mestre para rodar no Render (Garante banco de dados e servidor)
-CMD bash -c "rm -f tmp/pids/server.pid && bundle exec rails db:migrate && bundle exec rails server -b 0.0.0.0"
+# Comando de inicialização
+CMD ["bash", "-c", "rm -f tmp/pids/server.pid && bundle exec rails db:migrate && bundle exec rails server -b 0.0.0.0"]
