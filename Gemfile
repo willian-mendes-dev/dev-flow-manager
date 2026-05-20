@@ -13,6 +13,9 @@ gem "bootsnap", require: false
 
 group :development, :test do
   gem "debug", platforms: %i[mri windows]
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+  gem "faker"
 end
 
 group :development do
@@ -20,6 +23,7 @@ group :development do
 end
 
 group :test do
+  gem "simplecov", require: false
   gem "capybara"
   gem "selenium-webdriver"
 end

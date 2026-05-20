@@ -18,6 +18,8 @@ services:
     volumes:
       - .:/app
       - bundle_data:/usr/local/bundle
+    env_file:
+      - .env
     environment:
       RAILS_ENV: development
       POSTGRES_HOST: db
@@ -25,6 +27,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: dev_flow_manager_development
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-1.5-flash}
     depends_on:
       - db
 

@@ -50,6 +50,38 @@
 
     <div class="mb-6 rounded-2xl border border-gray-100 bg-white shadow-sm">
       <div class="flex items-center justify-between border-b border-gray-50 p-6">
+        <h3 class="text-lg font-bold text-slate-800">Conselheiro Financeiro com IA</h3>
+        <span class="text-xs font-semibold uppercase tracking-wide text-indigo-500">Gemini Advisor</span>
+      </div>
+      <div class="p-6">
+        <% if @ai_insight.present? %>
+          <div class="rounded-xl border border-indigo-100 bg-indigo-50 p-5 text-indigo-900">
+            <div class="mb-3 flex items-center gap-2">
+              <span class="text-xl">💡</span>
+              <p class="text-sm font-semibold uppercase tracking-wide text-indigo-700">Diagnóstico da IA</p>
+            </div>
+            <div class="text-sm leading-6"><%= format_ai_text(@ai_insight) %></div>
+            <div class="mt-4 flex items-center justify-between gap-3">
+              <p class="text-xs text-indigo-700">
+                Atualizado em:
+                <%= @ai_insight_generated_at&.strftime("%d/%m/%Y %H:%M") || "agora" %>
+              </p>
+              <%= button_to "Atualizar Análise", generate_home_insights_path, method: :post, class: "rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-indigo-700" %>
+            </div>
+          </div>
+        <% else %>
+          <div class="flex flex-col items-start gap-3">
+            <p class="text-sm text-slate-600">
+              Gere um diagnóstico financeiro rápido com base na situação atual do estoque.
+            </p>
+            <%= button_to "✨ Analisar Saúde do Estoque com IA", generate_home_insights_path, method: :post, class: "rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-700" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="mb-6 rounded-2xl border border-gray-100 bg-white shadow-sm">
+      <div class="flex items-center justify-between border-b border-gray-50 p-6">
         <h3 class="text-lg font-bold text-slate-800">Atividades Recentes</h3>
         <span class="text-xs font-semibold uppercase tracking-wide text-slate-500">Criacao e edicao de produtos</span>
       </div>

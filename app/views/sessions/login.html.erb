@@ -1,25 +1,36 @@
-<section class="mx-auto max-w-md rounded-xl bg-white p-6 shadow">
-  <h1 class="mb-2 text-2xl font-bold">MarketFlow - Gestão de Estoque</h1>
-  <p class="mb-6 text-sm text-slate-600">
-    Faça login para acessar o dashboard.
-  </p>
-
-  <%= form_with url: login_path, method: :post, local: true, class: "space-y-4" do |f| %>
-    <div>
-      <%= f.label :name, "Nome", class: "mb-1 block text-sm font-medium" %>
-      <%= f.text_field :name, value: @name, class: "w-full rounded-md border border-slate-300 px-3 py-2", placeholder: "Seu nome" %>
+<section class="-m-6 min-h-screen grid lg:grid-cols-2">
+  <div class="hidden bg-gradient-to-br from-indigo-900 to-indigo-600 lg:flex lg:items-center lg:justify-center">
+    <div class="mx-auto max-w-md px-8 text-white">
+      <h1 class="text-4xl font-bold">MarketFlow</h1>
+      <p class="mt-4 text-lg text-indigo-200">
+        Gestão inteligente e controle total do seu estoque em um só lugar.
+      </p>
     </div>
+  </div>
 
-    <div>
-      <%= f.label :password, "Senha", class: "mb-1 block text-sm font-medium" %>
-      <%= f.password_field :password, class: "w-full rounded-md border border-slate-300 px-3 py-2", placeholder: "Exemplo@123" %>
+  <div class="bg-white flex items-center justify-center px-6 py-10">
+    <div class="w-full max-w-md rounded-2xl border border-gray-100 p-8 shadow-sm">
+      <h2 class="mb-2 text-3xl font-bold text-slate-900">Bem-vindo de volta</h2>
+      <p class="mb-8 text-sm text-slate-500">Faça login para acessar o dashboard.</p>
+
+      <%= form_with url: login_path, method: :post, local: true, class: "space-y-5" do |f| %>
+        <div>
+          <%= f.label :name, "Nome", class: "mb-1 block text-sm font-medium text-slate-700" %>
+          <%= f.text_field :name, value: @name, placeholder: "Seu nome", class: "w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600" %>
+        </div>
+
+        <div>
+          <%= f.label :password, "Senha", class: "mb-1 block text-sm font-medium text-slate-700" %>
+          <%= f.password_field :password, placeholder: "Exemplo@123", class: "w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600" %>
+        </div>
+
+        <%= f.submit "Entrar", class: "w-full rounded-lg bg-indigo-600 px-4 py-2.5 font-semibold text-white transition-colors hover:bg-indigo-700" %>
+      <% end %>
+
+      <p class="mt-6 text-sm text-slate-600">
+        Não tem conta?
+        <%= link_to "Cadastre-se aqui", signup_path, class: "font-medium text-indigo-600 hover:text-indigo-700" %>
+      </p>
     </div>
-
-    <%= f.submit "Entrar", class: "w-full rounded-md bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700" %>
-  <% end %>
-
-  <p class="mt-4 text-sm text-slate-600">
-    Não tem conta?
-    <%= link_to "Cadastre-se aqui", signup_path, class: "font-medium text-blue-600 hover:text-blue-700" %>
-  </p>
+  </div>
 </section>
