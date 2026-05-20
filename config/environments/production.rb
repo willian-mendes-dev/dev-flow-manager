@@ -17,4 +17,5 @@ Rails.application.configure do
 
   config.force_ssl = false
   config.require_master_key = false
+  config.secret_key_base = ENV["SECRET_KEY_BASE"]
 end
