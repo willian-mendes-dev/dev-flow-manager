@@ -18,5 +18,7 @@ RUN chmod +x bin/rails bin/rake bin/docker-entrypoint
 
 EXPOSE 3000
 
-ENTRYPOINT ["./bin/docker-entrypoint"]
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3000"]
+# ENTRYPOINT ["./bin/docker-entrypoint"]
+
+# Comando mestre para rodar no Render (Garante banco de dados e servidor)
+CMD bash -c "rm -f tmp/pids/server.pid && bundle exec rails db:migrate && bundle exec rails server -b 0.0.0.0"
